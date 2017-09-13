@@ -113,7 +113,7 @@
         <property name="customerReviewConverter" ref="customerReviewRaoConverter" />
     </bean>
 
-    <alias name="promotionenginetrailUserRaoConverter" alias="userRaoConverter" />
+<!--    <alias name="promotionenginetrailUserRaoConverter" alias="userRaoConverter" />
     <bean id="promotionenginetrailUserRaoConverter" parent="abstractPopulatingConverter">
         <property name="targetClass" value="de.hybris.platform.ruleengineservices.rao.UserRAO" />
         <property name="populators">
@@ -123,11 +123,38 @@
             </list>
         </property>
     </bean>
-
+-->
     <alias name="defaultCustomerReviewRaoExtractor" alias="customerReviewRaoExtractor"/>
     <bean id="defaultCustomerReviewRaoExtractor" class="de.hybris.promotionenginetrail.rao.providers.impl.CustomerReviewRaoExtractor"/>
 
     <bean id="promotionEngineTrailcartRAOProviderExtractorsListMergeDirective" depends-on="cartRAOProviderExtractors" parent="listMergeDirective">
         <property name="add" ref="customerReviewRaoExtractor"/>
     </bean>
+
+    <alias alias="addUserToUserGroupRAOAction" name="defaultAddUserToUserGroupRAOAction" />
+    <bean id="defaultAddUserToUserGroupRAOAction" parent="abstractRuleExecutableSupport" class="de.hybris.promotionenginetrail.rule.action.impl.AddUserToUserGroupRAOAction"/>
+
+    <alias alias="addUserToUserGroupAction" name="defaultAddUserToUserGroupAction" />
+    <bean id="defaultAddUserToUserGroupAction" class="de.hybris.platform.ruledefinitions.actions.DefaultRuleExecutableAction">
+        <property name="raoAction" ref="addUserToUserGroupRAOAction"/>
+    </bean>
+
+    <alias name="defaultAddUserToUserGroupActionStrategy" alias="addUserToUserGroupActionStrategy"/>
+    <bean id="defaultAddUserToUserGroupActionStrategy" parent="abstractRuleActionStrategy" class="de.hybris.promotionenginetrail.action.DefaultAddUserToUserGroupActionStrategy" >
+        <property name="promotionAction" value="de.hybris.promotionenginetrail.model.RuleBasedAddUserToUserGroupActionModel"/>
+        <property name="userService" ref="userService" />
+    </bean>
+
+    <bean id="promotionenginetrailActionStrategies" depends-on="actionStrategies" parent="listMergeDirective">
+        <property name="add" ref="defaultAddUserToUserGroupActionStrategy" />
+    </bean>
+
+    <bean id="promotionenginetrailPromotionActionStrategiesMapping" depends-on="promotionActionStrategiesMapping" parent="mapMergeDirective">
+        <property name="key" value="defaultAddUserToUserGroupRAOAction" />
+        <property name="value" ref="defaultAddUserToUserGroupActionStrategy" />
+    </bean>
+
+    <alias alias="ruleCustomerReviewTranslator" name="defaultRuleCustomerReviewTranslator" />
+    <bean id="defaultRuleCustomerReviewTranslator" class="de.hybris.promotionenginetrail.definitions.conditions.RuleCustomerReviewTranslator" />
+    
 </beans>

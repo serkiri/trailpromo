@@ -1,0 +1,22 @@
+INSERT_UPDATE DroolsRule;uuid;code[unique=true];rulePackage;active;globals;ruleType(code);ruleGroupCode;messageFired[lang=en];kieBase(name);version;currentVersion[default=true];ruleContent
+;a550997f-56de-4f81-96f2-392a7830f78b;testTrail;de.hybris.platform.promotionengineservices.test;true;addUserToUserGroupAction->addUserToUserGroupAction;PROMOTION;;You are added to special user group.;promotions-base;0;;cont
+
+package de.hybris.platform.promotionengineservices.test
+import java.util.Map;
+import de.hybris.platform.ruleengineservices.rao.CartRAO;
+import de.hybris.platform.ruleengineservices.rao.OrderEntryRAO;
+import de.hybris.platform.ruleengineservices.rao.UserGroupRAO;
+import de.hybris.platform.ruleengineservices.rao.CustomerReviewRAO;
+import de.hybris.platform.ruleengineservices.rao.RuleEngineResultRAO;
+import de.hybris.platform.ruleengineservices.rao.WebsiteGroupRAO;
+import de.hybris.platform.ruleengineservices.rrd.RuleConfigurationRRD;
+import de.hybris.platform.droolsruleengineservices.compiler.impl.DefaultDroolsRuleActionContext;
+
+global de.hybris.platform.ruleengineservices.rule.evaluation.RuleExecutableAction addUserToUserGroupAction;
+rule "a550997f-56de-4f81-96f2-392a7830f78b"
+@ruleCode("testTrail")
+dialect "mvel"
+salience 10
+when
+then
+end
